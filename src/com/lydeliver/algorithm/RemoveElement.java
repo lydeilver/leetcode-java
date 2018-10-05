@@ -1,4 +1,4 @@
-package com.lydeliver;
+package com.lydeliver.algorithm;
 
 /**
  * @ClassName RemoveElement

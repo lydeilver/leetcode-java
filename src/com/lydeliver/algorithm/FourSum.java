@@ -1,4 +1,4 @@
-package com.lydeliver;
+package com.lydeliver.algorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
