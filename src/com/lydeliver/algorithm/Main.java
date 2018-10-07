@@ -15,7 +15,13 @@ public class Main {
        /* NextPermutation nextPermutation = new NextPermutation();
         nextPermutation.nextPermutation(new int[]{1,5,1});*/
 
-        SearchInsertPosition searchInsertPosition = new SearchInsertPosition();
-        searchInsertPosition.binarySearch(new int[]{1,3,5,6},2);
+       // SearchInsertPosition searchInsertPosition = new SearchInsertPosition();
+       // searchInsertPosition.binarySearch(new int[]{1,3,5,6},2);
+
+
+        String a = "A";
+        a.hashCode();
+        String b = "A";
+        b.hashCode();
     }/**/
 }
