@@ -9,19 +9,11 @@ import java.util.TreeMap;
  * @Version 1.0
  * @Description TODO
  */
-public class TreeNode<T> {
+public class TreeNode {
 
-    public TreeNode(T t) {
-        this(t, null, null);
-    }
-    public TreeNode(T t,TreeNode<T> lt,TreeNode<T> rt ){
-        this.element =t;
-        this.firstChild = lt;
-        this.leftChild = rt;
-    }
-
-    T element;
-    TreeNode<T> firstChild;
-    TreeNode<T> leftChild;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int x) { val = x; }
 
 }
