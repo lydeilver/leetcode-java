@@ -22,7 +22,7 @@ public class DFSCombination {
         }
         for (int i = s; i < nums.length; i++) {
             curr.add(nums[i]);
-            combination(nums, d + 1, n, i + 1, curr, res);
+            combination(nums, d + 1, n, i , curr, res);
             curr.remove(curr.size() - 1);
         }
 
@@ -32,9 +32,11 @@ public class DFSCombination {
         DFSCombination dfsCombination = new DFSCombination();
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         ArrayList<Integer> curr = new ArrayList<Integer>();
-        int [] nums = {1,2,3};
-        dfsCombination.combination(nums,0,1,0,curr,res);
+        int [] nums = {1,2,3,4};
+        dfsCombination.combination(nums,0,3,0,curr,res);
         System.out.println(res);
 
     }
+
+
 }

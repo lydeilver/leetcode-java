@@ -1,5 +1,10 @@
 package com.lydeliver.issues.tree;
 
+import apple.laf.JRSUIUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  * @ClassName BinaryTree
  * @Author jonathan
@@ -126,6 +131,22 @@ public class BinaryTree<T extends Comparable<? super T>>{
         }
     }
 
+    public LinkedList<T> find(TreeNode<T> node , int deep) {
+        LinkedList<T> list = new LinkedList<>();
+        find(list, node, deep);
+        return list;
+    }
+    private void find(LinkedList<T> list, TreeNode<T> node , int deep){
+        if(deep==0){
+            list.add(node.data);
+            return;
+        }
+        if(node==null){
+            return;
+        }
+        find(list,node.lt,deep--);
+        find(list,node.rt,deep--);
+    }
 
 
 
@@ -145,6 +166,7 @@ public class BinaryTree<T extends Comparable<? super T>>{
         }
 
 
+
     }
 
 
@@ -155,7 +177,8 @@ public class BinaryTree<T extends Comparable<? super T>>{
      * @param end
      * @return
      */
-    public TreeNode<T> createMinimalBST(T [] arrs,int start,int end){
+    public TreeNode<T> createMinimalBST(T [] arrs,int start,int end)
+    {
         if(start>end){
             return null;
         }
@@ -165,6 +188,85 @@ public class BinaryTree<T extends Comparable<? super T>>{
         node.lt=createMinimalBST(arrs,start,mid-1);
         node.rt=createMinimalBST(arrs,mid+1,end);
         return node;
+    }
+
+    /**
+     * 创建含有某一个深度上所有节点的链表
+     * BFS 变种
+     * @param root
+     * @return
+     */
+    public ArrayList<LinkedList<TreeNode>> createLevelLinkedList(TreeNode root){
+        ArrayList<LinkedList<TreeNode>> result = new ArrayList<LinkedList<TreeNode>>();
+        LinkedList<TreeNode> current = new LinkedList<>();
+
+        if(root!=null){
+            current.add(root);
+        }
+        while(!current.isEmpty()){
+            result.add(current);
+            LinkedList<TreeNode> parents = current;
+            current = new LinkedList<TreeNode>();
+            for(TreeNode parent : parents){
+                if(parent.lt!=null){
+                    current.add(parent.lt);
+                }
+                if(parent.rt!=null){
+                    current.add(parent.rt);
+                }
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * method2
+     * 前序遍历变种
+     * @param
+     */
+
+    public void createLevelLinkedList(ArrayList<LinkedList<TreeNode>> lists,TreeNode root,int level){
+        if (root == null) {
+            return ;
+        }
+        LinkedList<TreeNode> list =null;
+        if (level == lists.size()) {
+            list = new LinkedList<>();
+            lists.add(list);
+        }else{
+            list = lists.get(level);
+        }
+        list.add(root);
+
+        createLevelLinkedList(lists, root.lt, level++);
+        createLevelLinkedList(lists, root.rt, level++);
+
+
+
+    }
+
+    public boolean checkBST(TreeNode<T> root,T min,T max){
+
+        if(root==null){
+            return true;
+        }
+
+        if(root.data.compareTo(min)<0 || root.data.compareTo(max)>0){
+            return false;
+        }
+
+        return checkBST(root.lt,min,root.data)&&checkBST(root.rt,root.data,max);
+
+
+    }
+
+    public static void main(String[] args) {
+        BinaryTree<Integer> treeNode = new BinaryTree<>();
+        Integer [] arrs ={1,2,3,4,6,7,8,9,10,11,12};
+        TreeNode<Integer> node = treeNode.createMinimalBST(arrs,0, 10);
+        LinkedList<Integer> res = treeNode.find(node,3);
+        System.out.println(res);
     }
 
 }

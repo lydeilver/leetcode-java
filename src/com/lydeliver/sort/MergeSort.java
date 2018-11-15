@@ -29,7 +29,9 @@ public class MergeSort {
         }
 
         for (int j = 0; i < numElements; j++, i--) {
+            ts[i]=tmps[i];
         }
+
 
     }
 
@@ -47,4 +49,40 @@ public class MergeSort {
             merge(ts,tmps,left,mid,right);
         }
     }
+
+    public void merge(int []nums,int [] tmp,int start,int end){
+        if (start >= end) {
+            return;
+        }
+        int mid =(start+end)/2;
+        merge(nums,tmp,start,mid-1);
+        merge(nums, tmp, mid + 1, end);
+        merges(nums, tmp, start, mid, end);
+    }
+    private void merges(int []nums,int [] tmp,int start,int mid,int end){
+        int ls =start;
+        int rs =mid+1;
+        int ts=start;
+        int pos = end-start+1;
+
+        while (ls <= mid && rs <= end) {
+            if(nums[ls]<nums[rs]){
+                tmp[ts++]=nums[ls++];
+            }else{
+                tmp[ts++]=nums[rs++];
+            }
+        }
+
+        while (ls <= mid) {
+            tmp[ts++]=nums[ls++];
+        }
+        while (rs <= mid) {
+            tmp[ts++]=nums[rs++];
+        }
+        for (int i = 0; i < pos; i++, end--) {
+            nums[end] = tmp[end];
+        }
+    }
+
+
 }

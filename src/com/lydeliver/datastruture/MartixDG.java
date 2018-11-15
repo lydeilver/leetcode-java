@@ -1,5 +1,8 @@
 package com.lydeliver.datastruture;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @ClassName MartixDG
  * @Author jonathan
@@ -37,6 +40,33 @@ public class MartixDG {
         }
     }
 
+
+    public void BFS() {
+        boolean[] flag = new boolean[size];
+
+        LinkedList<Integer> link = new LinkedList<>();
+
+        for (int i = 0; i < size; i++) {
+            if (!flag[i]) {
+                flag[i] =true;
+                System.out.println(vertex[i]);
+                link.add(i);
+                while (!link.isEmpty()) {
+                    link.pollFirst();
+                    for (int j = 0; j < size; j++) {
+                        if(martix[i][j]==1&&!flag[j]){
+                            flag[j]=true;
+                            System.out.println(vertex[j]);
+                            link.add(j);
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+
     private void DFS(int i,boolean [] flag) {
 
         flag[i] =true;
@@ -49,6 +79,10 @@ public class MartixDG {
             }
         }
     }
+
+
+
+
 
     private int getPosition(char c) {
         for (int i = 0; i < size; i++) {
@@ -76,7 +110,8 @@ public class MartixDG {
         MartixDG matrixDG = new MartixDG(vertex,edges);
 
         matrixDG.print();
-        matrixDG.DFS();
+        //matrixDG.DFS();
+        matrixDG.BFS();
 
 
 

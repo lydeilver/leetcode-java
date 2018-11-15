@@ -1,8 +1,37 @@
 package com.lydeliver.algorithm;
 
+import com.lydeliver.datastruture.TreeNode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        DFS(root,0,res);
+        return res;
+    }
+
+    void DFS(TreeNode root, int deepth, List<List<Integer>> res){
+        if(root==null)return;
+        while(res.size()<=deepth){
+            res.add(new ArrayList<>());
+        }
+        res.get(deepth).add(root.val);
+        DFS(root.left,deepth+1,res);
+        DFS(root.right,deepth+1,res);
+
+    }
     public static void main(String[] args) {
+
+        Main main= new Main();
+        TreeNode treeNode =new TreeNode(1);
+        treeNode.left = new TreeNode(2);
+        treeNode.right=new TreeNode(3);
+        main.levelOrder(treeNode);
+
 	// write your code here
 
         Sqrt sqrt = new Sqrt();

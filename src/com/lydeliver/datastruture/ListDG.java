@@ -1,5 +1,7 @@
 package com.lydeliver.datastruture;
 
+import java.util.LinkedList;
+
 /**
  * @ClassName ListDG
  * @Author jonathan
@@ -11,22 +13,22 @@ public class ListDG {
 
     private int size;
 
-    private Vertex [] vertexs;
+    private Vertex[] vertexs;
 
-    private class Vertex{
+    private class Vertex {
         char ch;
         Vertex next;
 
-         Vertex(char ch) {
-           this.ch =ch;
+        Vertex(char ch) {
+            this.ch = ch;
         }
 
-         void add(char ch) {
+        void add(char ch) {
             Vertex node = this;
-             while (node.next != null) {
-                 node =node.next;
-             }
-             node.next = new Vertex(ch);
+            while (node.next != null) {
+                node = node.next;
+            }
+            node.next = new Vertex(ch);
         }
 
     }
@@ -36,7 +38,7 @@ public class ListDG {
 
         for (int i = 0; i < size; i++) {
             if (!flag[i]) {
-                DFS(i,flag);
+                DFS(i, flag);
             }
         }
     }
@@ -47,12 +49,43 @@ public class ListDG {
         System.out.println(vertexs[i]);
         Vertex v = vertexs[i];
         while (v != null) {
-            if(!flag[getPosition(v.ch)]){
+            if (!flag[getPosition(v.ch)]) {
                 DFS(getPosition(v.ch), flag);
             }
-            v =v.next;
+            v = v.next;
         }
     }
+
+    public void BFS() {
+        boolean[] flag = new boolean[size];
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        for (int i = 0; i < size; i++) {
+
+            if (!flag[i]) {
+                System.out.println(vertexs[i].ch);
+                flag[i] = true;
+                queue.add(i);
+
+                while (!queue.isEmpty()) {
+
+                    int pos = queue.poll();
+                    Vertex v = vertexs[pos];
+                    while (v != null) {
+                        int k = getPosition(v.ch);
+                        if (!flag[k]) {
+                            System.out.println(v.ch);
+                            flag[k] = true;
+                            queue.add(k);
+                        }
+                        v = v.next;
+                    }
+
+                }
+            }
+        }
+    }
+
 
     public ListDG(char[] vertex, char[][] edges) {
         this.size = vertex.length;
@@ -67,7 +100,6 @@ public class ListDG {
     }
 
 
-
     private int getPosition(char ch) {
         for (int i = 0; i < size; i++) {
             if (vertexs[i].ch == ch) {
@@ -75,6 +107,40 @@ public class ListDG {
             }
         }
         return -1;
+    }
+
+    /**
+     * 查找两个节点之间是否存在一条路径
+     * 用BFS或者DFS都可以
+     * @param a
+     * @param c
+     * @return
+     */
+    public boolean isContected(char a, char c) {
+
+        LinkedList<Integer> queue = new LinkedList<>();
+        boolean[] flag = new boolean[size];
+
+        int p1 = getPosition(a);
+        queue.add(p1);
+        flag[p1]=true;
+        while (!queue.isEmpty()) {
+            int p = queue.poll();
+            Vertex v = vertexs[p];
+            while (v != null) {
+                if (v.ch == c) {
+                    return true;
+                }
+                int tmp = getPosition(v.ch);
+                if (!flag[tmp]) {
+                    queue.add(tmp);
+                    flag[tmp] =true;
+                }
+                v = v.next;
+
+            }
+        }
+        return false;
     }
 
     public void println() {
@@ -107,7 +173,8 @@ public class ListDG {
         pG = new ListDG(vexs, edges);
 
         pG.println();
-        pG.DFS();
+        System.out.println(pG.isContected('E','F'));
+
 
     }
 }
